@@ -29,7 +29,8 @@ public class Playground {
     public static <T extends TTree<V, S> & Tree<V, S>, V extends TNode<V, S>, S extends TComponent> void main(
 	    String[] args) {
 	Compiler compiler = new Compiler();
-	String query = "/*Pythagorean theorem*/ z := sqrt(x * x + y * y)";
+//	String query = "/*Pythagorean theorem*/ z := sqrt(x * x + y * y)";
+	String query = "result := coordinates [calc sqrt(x * x + y * y) as \"distance\"];";
 
 	System.out.println("----------------------------------");
 	AST ast = new AST(compiler.compile(query));
