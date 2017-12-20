@@ -23,21 +23,18 @@ public class Playground {
     public static <T extends TTree<V, S> & Tree<V, S>, V extends TNode<V, S>, S extends TComponent> void main(
 	    String[] args) {
 	Compiler compiler = new Compiler();
-	String query = "z := sqrt(x * x + y * y)";
+	String query = "/*Pythagorean theorem*/ z := sqrt(x * x + y * y)";
 
 	System.out.println("----------------------------------");
 	AST ast = new AST(compiler.compile(query));
 	// show the abstract syntax tree in the console
+	System.out.println("* Tree structure of the abstract syntax tree:");
 	System.out.println(ast.toString());
 	System.out.println("----------------------------------");
 
 	// extract a (transformation) tree structure
 	TTree tree = compiler.extractTree(query);
 	if (!tree.isEmpty()) {
-	    // transform the abstract syntax tree such that the resulting tree
-	    // structure is compliant with the BIRD interpretation of the SDMX
-	    // information model for transformations
-	    tree.transform();
 	    // show the resulting tree structure in the console
 	    System.out
 		    .println("* tree structure compliant with the BIRD interpretation of the SDMX information model:");
@@ -105,4 +102,5 @@ public class Playground {
 	    context.close();
 	}
     }
+
 }
