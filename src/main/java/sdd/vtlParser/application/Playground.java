@@ -17,6 +17,12 @@ import ecb.transformations.enums.Representation;
 import ecb.transformations.metadata.TContext;
 import ecb.transformations.treeStructure.TComponent;
 
+/**
+ * Playground in order to illustrate the utility of the parser.
+ * 
+ * @author Dominik Lin
+ *
+ */
 public class Playground {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -44,6 +50,7 @@ public class Playground {
 	    // extract all nodes from the tree
 	    Set<V> nodes = tree.getAllNodes();
 	    EntityManager entityManager = null;
+	    
 	    // create a new transformation context
 	    TContext context = new TContext();
 	    try {
