@@ -17,12 +17,25 @@ import ecb.transformations.treeStructure.TComponent;
 import ecb.transformations.treeStructure.TNode;
 import ecb.transformations.treeStructure.TTree;
 
+/**
+ * Compiler class allows for extracting tree structures from a given VTL
+ * expression. The result of the {@link #compile(String)} method is a parse tree
+ * while the result of the {@link #extractTree(String)} method is a tree
+ * structure reflecting the BIRD interpretation of the SDMX information model
+ * for transformations.
+ * 
+ * @author Dominik Lin
+ *
+ */
 @SuppressWarnings("unchecked")
 public class Compiler extends AbstractCompiler {
 
-    public static List<String> tokens = new ArrayList<>();
+    private static List<String> tokens = new ArrayList<>();
 
-    public void setup() {
+    /**
+     * Sets up the list of tokens
+     */
+    private void setup() {
 	Vocabulary voc = VtlParser.VOCABULARY;
 	try {
 	    for (int i = 0; i < voc.getMaxTokenType(); i++) {
@@ -34,6 +47,12 @@ public class Compiler extends AbstractCompiler {
 	}
     }
 
+    /**
+     * 
+     * @param a
+     *            VTL expression
+     * @return the ParseTree corresponding to the given expression
+     */
     @Override
     public ParseTree compile(String expression) {
 	ANTLRInputStream input = new ANTLRInputStream(expression.replace("\n", " "));
@@ -44,6 +63,18 @@ public class Compiler extends AbstractCompiler {
 	return tree;
     }
 
+    /**
+     * Given a VTL expression this method extracts a parse tree and transforms
+     * this parse tree into a tree structure that reflects the BIRD
+     * interpretation of the SDMX information model for transformations. Please
+     * note that in case the parse tree contains any errors (e.g. the given
+     * expression is no valid VTL expression) null will be returned.
+     * 
+     * @param expression
+     *            a VTL expression
+     * @return a tree structure reflecting the BIRD interpretation of the SDMX
+     *         information model for transformations
+     */
     public <T extends TTree<S, V> & Tree<S, V>, S extends TNode<S, V>, V extends TComponent> T extractTree(
 	    String expression) {
 	T tree = null;
@@ -55,17 +86,27 @@ public class Compiler extends AbstractCompiler {
 	    visit(parseTree, origin);
 	    tree.setRoot(origin);
 	    if (tree.findAllByType(TContext.CONST_ERROR_NODE_IMPL) != null) {
+		// there is an error in the generated tree structure
 		tree = null;
 	    } else {
-		// manipulate tree structure to fit the sdmx information model
-		// for transformations
-
+		// manipulate tree structure in order to comply with the sdmx
+		// information model for transformations
+		tree.transform();
 	    }
 	}
 	return tree;
     }
 
-    public static <S extends TNode<S, V> & Node<S, V>, V extends TComponent> void visit(ParseTree inputTree, S node) {
+    /**
+     * Transports the information from a parse tree into a tree structure with
+     * the input node as it's root.
+     * 
+     * @param inputTree
+     *            a parse tree
+     * @param node
+     *            an object extending the transformation node class
+     */
+    private static <S extends TNode<S, V> & Node<S, V>, V extends TComponent> void visit(ParseTree inputTree, S node) {
 	if (inputTree.getChildCount() > 0) {
 	    for (int i = 0; i < inputTree.getChildCount(); i++) {
 		ParseTree child = inputTree.getChild(i);
@@ -91,7 +132,6 @@ public class Compiler extends AbstractCompiler {
 	    V component = (V) new TComponent(expression, type);
 	    S childNode = (S) new TNode<>(component);
 	    node.addChild(childNode);
-
 	}
     }
 
