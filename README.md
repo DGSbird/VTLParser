@@ -16,7 +16,7 @@ Please note that this project is dependent on the project *transformations* (in 
 5. Run the main() method in the class Playground
 6. Results: on the console you will see the (i) tree structure of the abstract syntax tree, the (ii) tree structure compliant with the BIRD interpretation of the SDMX information model, (iii) the nodes stored in the persistence context and (iv) the VTL built expression based on (ii)
 
-###Remarks###
+### Remarks ###
 
 Please note that the BIRD VTL tree structure is the BIRD group's interpretation of the SDMX information model and not an official structure documented by the SDMX community.
 Please also note that the (re)generation of the VTL expression from the BIRD VTL tree structure is still in development.
