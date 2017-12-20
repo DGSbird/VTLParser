@@ -13,8 +13,13 @@ Please note that this project is dependent on the project *transformations* (in 
 2. Clone this repository
 3. Include the *transformations* project into the build path of this project
 4. Type a VTL expression in the (String) variable *query* (that is set to "z := sqrt(x * x + y * y)" initially) in the class Playground
-5. Run the main method in the class Playground
+5. Run the main() method in the class Playground
 6. Results: on the console you will see the (i) tree structure of the abstract syntax tree, the (ii) tree structure compliant with the BIRD interpretation of the SDMX information model, (iii) the nodes stored in the persistence context and (iv) the VTL built expression based on (ii)
+
+###Remarks###
+
+Please note that the BIRD VTL tree structure is the BIRD group's interpretation of the SDMX information model and not an official structure documented by the SDMX community.
+Please also note that the (re)generation of the VTL expression from the BIRD VTL tree structure is still in development.
 
 ### Contact ###
 
